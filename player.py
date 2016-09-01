@@ -1,3 +1,5 @@
+import math
+
 class player:
 
     def __init__(self):
@@ -29,7 +31,7 @@ class player:
         self.farming = 1
         self.location = 45 #player room ID
         self.total = 32
-
+        self.combat = 3
         self.run = 100
 
     def gainLevel(self, skill):
@@ -65,14 +67,25 @@ class player:
                 self.firemaking = int(stat[22])
                 self.woodcutting = int(stat[23])
                 self.farming = int(stat[24])
+                
+        self.combatLevel()
 
-                for i in range(1,24):
-                    self.total = self.total + int(stat[i])
-                break
+        for i in range(1,24):
+            self.total = self.total + int(stat[i])         
+            
+    def combatLevel(self):
+        base = 0.25*(self.defense + self.hitpoints + math.floor(self.prayer/2))
+        melee = 0.325*(self.attack + self.strength)
+        range = 0.325*(math.floor(self.ranged/2) + self.ranged)
+        mage = 0.325*(math.floor(self.magic/2) + self.magic)
 
+        self.combat = math.floor(base + max(melee,range,mage))
+    
     def showStats(self):
         print ""
         print "*** STATISTICS ***"
+        print ""
+        print "%s (level %d)" % (self.name,self.combat)
         print ""
         print "ATT:%d/%d  HIT:%d/%d  MIN:%d/%d" % (self.attack, self.attack, self.currentHitpoints, self.hitpoints, self.mining, self.mining)
         print "STR:%d/%d  AGL:%d/%d  SMT:%d/%d" % (self.strength, self.strength, self.agility, self.agility, self.smithing, self.smithing)
@@ -83,6 +96,7 @@ class player:
         print "RNC:%d/%d  SLY:%d/%d  FRM:%d/%d" % (self.runecrafting, self.runecrafting, self.slayer, self.slayer, self.farming, self.farming)
         print "CON:%d/%d  HNT:%d/%d  TOT:%d" % (self.construction, self.construction, self.hunter, self.hunter, self.total)
         print ""
+
     def gotHit(self, damage):
         print 'Hit for ' + str(damage)
 

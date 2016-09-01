@@ -1,6 +1,6 @@
-import player, login, config, sys, map
-#from colorama import init, Fore, Back, Style #FUTURE ANSI COLORS
-#init()
+import player, login, config, sys, map, math
+from colorama import init, Fore, Back, Style
+init()
 
 
 PC = player.player()
@@ -8,7 +8,7 @@ PC = player.player()
 def setup():
     map.loadMap()
     login.createList()
-    PC.id = login.login()
+    PC.id,PC.name = login.login()
 
     if PC.id == 1:
         PC.loadStats()

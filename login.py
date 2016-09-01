@@ -32,7 +32,7 @@ def login():
 
         if (username,password) in config.userlist: #check valid login
             print 'Welcome ' + username
-            return config.userlist.index((username,password)) #userid is position
+            return config.userlist.index((username,password)),username #userid is position
             break
         #elif username == 'new'
         else:

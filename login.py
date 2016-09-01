@@ -10,33 +10,33 @@ def createList():
         config.userlist.append((linelist[n],linelist[n+1]))
         
 def login():
-    print '        - Welcome to RuneScape -         '
-    print '                                         '
-    print '                                         '
-    print '   )       1.Enter Login             )   '
-    print '  ) \      2.Type "New"             ) \  '
-    print ' / ) (                             / ) ( '
-    print ' \(_)/                             \(_)/ '
-    print ' (|||)     World: 1                (|||) '
-    print '  |||        NULL Players           |||  '
-    print '  |||                               |||  '
-    print '  |||                               |||  ' 
-    print ' (|||)    Copyright Jagex 1999     (|||) '
-    print '                                         '
+    print( '        - Welcome to RuneScape -         ')
+    print( '                                         ')
+    print( '                                         ')
+    print( '   )       1.Enter Login             )   ')
+    print( '  ) \      2.Type "New"             ) \  ')
+    print( ' / ) (                             / ) ( ')
+    print( ' \(_)/                             \(_)/ ')
+    print( ' (|||)     World: 1                (|||) ')
+    print( '  |||        NULL Players           |||  ')
+    print( '  |||                               |||  ')
+    print( '  |||                               |||  ')
+    print( ' (|||)    Copyright Jagex 1999     (|||) ')
+    print( '                                         ')
 
     loggedIn = False
     
     while loggedIn == False:
-        username = raw_input('Username:').lower()
-        password = raw_input('Password:').lower()
+        username = input('Username:').lower()
+        password = input('Password:').lower()
 
         if (username,password) in config.userlist: #check valid login
-            print 'Welcome ' + username
+            print( 'Welcome ' + username)
             return config.userlist.index((username,password)),username #userid is position
             break
         #elif username == 'new'
         else:
-            print 'Incorrect Login'
+            print( 'Incorrect Login')
 
 
         

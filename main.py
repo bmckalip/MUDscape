@@ -1,5 +1,12 @@
-import player, login, config, sys, mapper, math
-from colorama import init, Fore, Back, Style
+import player
+import login
+import config
+import sys
+import mapper
+import math
+#import command
+
+from colorama import init, Fore, Back, Style #For future 
 init()
 
 
@@ -15,8 +22,8 @@ def setup():
     
 
 def prompt():
-    input = raw_input(str(PC.hitpoints) +'/'+ str(PC.currentHitpoints) + ' >').lower()
-    parseInput(input)
+    userinput = input(str(PC.hitpoints) +'/'+ str(PC.currentHitpoints) + ' >').lower()
+    parseInput(userinput)
 
 def main():
     prompt()
@@ -25,13 +32,12 @@ def parseInput(input):
     arg = input.split(' ')
 
     if arg[0] == 'kill':
-        print 'You attack'
+        print( 'You attack')
         
     elif arg[0] in ('n','e','s','w'):
         location = PC.move(arg[0])
-        print location
         mapper.render(location)
-        print "You move " + arg[0].upper() + " " + str(location) 
+        print( "You move " + arg[0].upper() + " " + str(location) )
     
     elif arg[0] == 'attack':
         PC.gotHit(3)
@@ -40,10 +46,10 @@ def parseInput(input):
         PC.showStats()
 
     elif arg[0] in ('map','m','look','l'):
-        map.render(PC.location)
+        mapper.render(PC.location)
     
     else:
-        print 'Command Unrecognized'
+        print( 'Command Unrecognized')
 
   #Commands = {
   # 'quit': PC.quit,
@@ -57,7 +63,7 @@ def parseInput(input):
   #              commandFound = True
   #              break
   #      if not commandFound:
-  #          print "Invalid Command"
+  #          print( "Invalid Command")
             
 #--------------------------------------------------
 setup()

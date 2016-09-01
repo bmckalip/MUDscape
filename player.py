@@ -82,23 +82,23 @@ class player:
         self.combat = math.floor(base + max(melee,range,mage))
     
     def showStats(self):
-        print ""
-        print "*** STATISTICS ***"
-        print ""
-        print "%s (level %d)" % (self.name,self.combat)
-        print ""
-        print "ATT:%d/%d  HIT:%d/%d  MIN:%d/%d" % (self.attack, self.attack, self.currentHitpoints, self.hitpoints, self.mining, self.mining)
-        print "STR:%d/%d  AGL:%d/%d  SMT:%d/%d" % (self.strength, self.strength, self.agility, self.agility, self.smithing, self.smithing)
-        print "DEF:%d/%d  HRB:%d/%d  FSH:%d/%d" % (self.defense, self.defense, self.herblore, self.herblore, self.fishing, self.fishing)
-        print "RNG:%d/%d  THV:%d/%d  COK:%d/%d" % (self.ranged, self.ranged, self.theiving, self.theiving, self.cooking, self.cooking)
-        print "PRY:%d/%d  CRF:%d/%d  FIR:%d/%d" % (self.prayer, self.prayer, self.crafting, self.crafting, self.firemaking, self.firemaking)
-        print "MAG:%d/%d  FLT:%d/%d  WDC:%d/%d" % (self.magic, self.magic, self.fletching, self.fletching, self.woodcutting, self.woodcutting)
-        print "RNC:%d/%d  SLY:%d/%d  FRM:%d/%d" % (self.runecrafting, self.runecrafting, self.slayer, self.slayer, self.farming, self.farming)
-        print "CON:%d/%d  HNT:%d/%d  TOT:%d" % (self.construction, self.construction, self.hunter, self.hunter, self.total)
-        print ""
+        print( "")
+        print( "*** STATISTICS ***")
+        print( "")
+        print( "{} (level {})".format(self.name,self.combat))
+        print( "")
+        print( "ATT:{}/{}  HIT:{}/{}  MIN:{}/{}".format(self.attack, self.attack, self.currentHitpoints, self.hitpoints, self.mining, self.mining))
+        print( "STR:{}/{}  AGL:{}/{}  SMT:{}/{}".format(self.strength, self.strength, self.agility, self.agility, self.smithing, self.smithing))
+        print( "DEF:{}/{}  HRB:{}/{}  FSH:{}/{}".format(self.defense, self.defense, self.herblore, self.herblore, self.fishing, self.fishing))
+        print( "RNG:{}/{}  THV:{}/{}  COK:{}/{}".format(self.ranged, self.ranged, self.theiving, self.theiving, self.cooking, self.cooking))
+        print( "PRY:{}/{}  CRF:{}/{}  FIR:{}/{}".format(self.prayer, self.prayer, self.crafting, self.crafting, self.firemaking, self.firemaking))
+        print( "MAG:{}/{}  FLT:{}/{}  WDC:{}/{}".format(self.magic, self.magic, self.fletching, self.fletching, self.woodcutting, self.woodcutting))
+        print( "RNC:{}/{}  SLY:{}/{}  FRM:{}/{}".format(self.runecrafting, self.runecrafting, self.slayer, self.slayer, self.farming, self.farming))
+        print( "CON:{}/{}  HNT:{}/{}  TOT:{}".format(self.construction, self.construction, self.hunter, self.hunter, self.total))
+        print( "")
 
     def gotHit(self, damage):
-        print 'Hit for ' + str(damage)
+        print( 'Hit for ' + str(damage))
 
     def move(self, direction):
         if direction == 'n':

@@ -17,16 +17,17 @@ def loadMap():
 def render(location):
     mapstart = location - 22
     
-    print "  -- Room %d --      " % location #room title
-    print "╔═══════════════╗"
+    print("")
+    print( "  -- Room {} --      ".format(location)) #room title
+    print( "╔═══════════════╗")
     for i in range(0,5): #room tiles
         mapline = ""
         for x in range(0,5):
             index = mapstart+x+(10*i)
             mapline += config.mapgrid[index]
             
-        print "║               ║"
-   
-        print "║"+ mapline + "║"
+        print( "║               ║")
+        print( "║"+ mapline + "║")
         
-    print "╚═══════════════╝"
+    print( "╚═══════════════╝")
+    print( "")

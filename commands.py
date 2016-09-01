@@ -1,3 +1,5 @@
+import mapper
+
 class Command:
     pass
 

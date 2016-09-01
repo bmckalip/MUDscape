@@ -12,6 +12,7 @@ from colorama import init, Fore, Back, Style #For future
 PC = player.player()
 
 def setup():
+    print(chr(27) + "[2J")
     mapper.loadMap()
     login.createList()
     PC.id,PC.name = login.login()

@@ -1,4 +1,4 @@
-import player, login, config, sys, map, math
+import player, login, config, sys, mapper, math
 from colorama import init, Fore, Back, Style
 init()
 
@@ -6,7 +6,7 @@ init()
 PC = player.player()
 
 def setup():
-    map.loadMap()
+    mapper.loadMap()
     login.createList()
     PC.id,PC.name = login.login()
 
@@ -30,7 +30,7 @@ def parseInput(input):
     elif arg[0] in ('n','e','s','w'):
         location = PC.move(arg[0])
         print location
-        map.render(location)
+        mapper.render(location)
         print "You move " + arg[0].upper() + " " + str(location) 
     
     elif arg[0] == 'attack':

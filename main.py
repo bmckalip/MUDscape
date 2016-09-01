@@ -31,7 +31,7 @@ def parseInput(input):
     args = input.split(' ')
 
     try:
-        commands[args[0]].perform(PC, *args[1:])
+        commands[args[0]].perform(PC, *args)
     except KeyError:
         print('Invalid command: {}'.format(args[0]))
 

@@ -1,4 +1,4 @@
-import mapper
+import mapper 
 
 class Command:
     pass
@@ -23,10 +23,10 @@ class Look(Command):
 
     @staticmethod
     def perform(player, *args):
-        mapper.render(location)
+        mapper.render(player.location)
 
 class Move(Command):
-    tokens = ['n', 's', 'e', 'w']
+    tokens = ['n', 'north', 's', 'south', 'e', 'east', 'w', 'west']
 
     @staticmethod
     def perform(player, *args):

@@ -1,14 +1,19 @@
-## MUDscape
+# Welcome to MUDscape!
 
-#Extremely WIP!!
+### Extremely WIP!!
 
-Run main.py.
+Run main.py, logins are located in userlist file.
 
-#Current Modules:
-main.py | Pro
-map.py | test
+###Current Modules:
+Name | Function
+--- | ---
+main.py | Program control.
+map.py | Loads room tiles from the mapgrid file.
+login.py | Handles logins by checking the userlist file.
+player.py | Player class, holds all variables and functionality for location, combat, etc.
 
-#TODO: 
+####TODO: 
 -Room System
 -Inventory System
 -Combat System
+-Implement Multiplayer

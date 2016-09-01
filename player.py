@@ -45,7 +45,7 @@ class Player(Character):
         
         for line in f:
             #parse input line as a list of ints
-            attributes = map(int, line.split(','))
+            attributes = list(map(int, line.split(',')))
             if line[0] == self.id:
                 self.level_hitpoints = [attributes[1], attributes[2]]
                 self.level_attack = attributes[3]
@@ -75,7 +75,7 @@ class Player(Character):
             attributes = attributes[2:]
             self.level_total = 0
             for attribute in attributes:
-                self.total = self.total + attribute
+                self.level_total = self.level_total + attribute
             
     def combatLevel(self):
         base = 0.25*(self.defense + self.hitpoints + math.floor(self.prayer/2))

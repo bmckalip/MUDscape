@@ -32,7 +32,7 @@ class Player(Character):
         self.level_farming = [1, 1]
 
         self.location = 45 #player room ID
-        self.total = 32
+        self.level_total = 32
         self.combat = 3
         self.run = 100
 
@@ -73,7 +73,7 @@ class Player(Character):
                 self.combatLevel()
 
             attributes = attributes[2:]
-            self.total = 0
+            self.level_total = 0
             for attribute in attributes:
                 self.total = self.total + attribute
             
@@ -91,14 +91,14 @@ class Player(Character):
         print( "")
         print( "{} (level {})".format(self.name,self.combat))
         print( "")
-        print( "ATT:{}/{}  HIT:{}/{}  MIN:{}/{}".format(self.level_attack, self.level_attack, self.level_hitpoints[0], self.level_hitpoints[1], self.level_mining, self.level_mining))
-        print( "STR:{}/{}  AGL:{}/{}  SMT:{}/{}".format(self.level_strength, self.level_strength, self.level_agility, self.level_agility, self.level_smithing, self.level_smithing))
-        print( "DEF:{}/{}  HRB:{}/{}  FSH:{}/{}".format(self.level_defense, self.level_defense, self.level_herblore, self.level_herblore, self.level_fishing, self.level_fishing))
-        print( "RNG:{}/{}  THV:{}/{}  COK:{}/{}".format(self.level_ranged, self.level_ranged, self.level_theiving, self.level_theiving, self.level_cooking, self.level_cooking))
-        print( "PRY:{}/{}  CRF:{}/{}  FIR:{}/{}".format(self.level_prayer, self.level_prayer, self.level_crafting, self.level_crafting, self.level_firemaking, self.level_firemaking))
-        print( "MAG:{}/{}  FLT:{}/{}  WDC:{}/{}".format(self.level_magic, self.level_magic, self.level_fletching, self.level_fletching, self.level_woodcutting, self.level_woodcutting))
-        print( "RNC:{}/{}  SLY:{}/{}  FRM:{}/{}".format(self.level_runecrafting, self.level_runecrafting, self.level_slayer, self.level_slayer, self.level_farming, self.level_farming))
-        print( "CON:{}/{}  HNT:{}/{}  TOT:{}".format(self.level_construction, self.level_construction, self.level_hunter, self.level_hunter, self.level_total))
+        print( "ATT:{}/{}  HIT:{}/{}  MIN:{}/{}".format(self.level_attack[0], self.level_attack[1], self.level_hitpoints[0], self.level_hitpoints[1], self.level_mining[0], self.level_mining[1]))
+        print( "STR:{}/{}  AGL:{}/{}  SMT:{}/{}".format(self.level_strength[0], self.level_strength[1], self.level_agility[0], self.level_agility[1], self.level_smithing[0], self.level_smithing[1]))
+        print( "DEF:{}/{}  HRB:{}/{}  FSH:{}/{}".format(self.level_defense[0], self.level_defense[1], self.level_herblore[0], self.level_herblore[1], self.level_fishing[0], self.level_fishing[1]))
+        print( "RNG:{}/{}  THV:{}/{}  COK:{}/{}".format(self.level_ranged[0], self.level_ranged[1], self.level_theiving[0], self.level_theiving[1], self.level_cooking[0], self.level_cooking[1]))
+        print( "PRY:{}/{}  CRF:{}/{}  FIR:{}/{}".format(self.level_prayer[0], self.level_prayer[1], self.level_crafting[0], self.level_crafting[1], self.level_firemaking[0], self.level_firemaking[1]))
+        print( "MAG:{}/{}  FLT:{}/{}  WDC:{}/{}".format(self.level_magic[0], self.level_magic[1], self.level_fletching[0], self.level_fletching[1], self.level_woodcutting[0], self.level_woodcutting[1]))
+        print( "RNC:{}/{}  SLY:{}/{}  FRM:{}/{}".format(self.level_runecrafting[0], self.level_runecrafting[1], self.level_slayer[0], self.level_slayer[1], self.level_farming[0], self.level_farming[1]))
+        print( "CON:{}/{}  HNT:{}/{}  TOT:{}".format(self.level_construction[0], self.level_construction[1], self.level_hunter[0], self.level_hunter[1], self.level_total))
         print( "")
 
     def move(self, direction):

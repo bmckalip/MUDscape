@@ -1,6 +1,6 @@
 import player, login, config, sys, map
-from colorama import init, Fore, Back, Style
-init()
+#from colorama import init, Fore, Back, Style #FUTURE ANSI COLORS
+#init()
 
 
 PC = player.player()

@@ -1,7 +1,12 @@
-import mapper 
+import mapper
+from abc import ABC, abstractmethod
 
-class Command:
-    pass
+
+class Command(ABC):
+    @abstractmethod
+    def perform(self):
+        pass
+
 
 class Kill(Command):
     tokens = ['kill']
@@ -18,12 +23,14 @@ class Stats(Command):
     def perform(player, *args):
         player.showStats()
 
+
 class Look(Command):
-    tokens = ['map','m','l','look']
+    tokens = ['map', 'm', 'l', 'look']
 
     @staticmethod
     def perform(player, *args):
         mapper.render(player.location)
+
 
 class Move(Command):
     tokens = ['n', 'north', 's', 'south', 'e', 'east', 'w', 'west']

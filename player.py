@@ -46,42 +46,42 @@ class Player(Character):
         for line in f:
             #parse input line as a list of ints
             attributes = list(map(int, line.split(',')))
-            if line[0] == self.id:
+            if attributes[0] == self.id:
                 self.level_hitpoints = [attributes[1], attributes[2]]
-                self.level_attack = attributes[3]
-                self.level_strength = attributes[4]
-                self.level_defense = attributes[5]
-                self.level_ranged = attributes[6]
-                self.level_prayer = attributes[7]
-                self.level_magic = attributes[8]
-                self.level_runecrafting = attributes[9]
-                self.level_construction = attributes[10]
-                self.level_agility = attributes[11]
-                self.level_herblore = attributes[12]
-                self.level_theiving = attributes[13]
-                self.level_crafting = attributes[14]
-                self.level_fletching = attributes[15]
-                self.level_slayer = attributes[16]
-                self.level_hunter = attributes[17]
-                self.level_mining = attributes[18]
-                self.level_smithing = attributes[19]
-                self.level_fishing = attributes[20]
-                self.level_cooking = attributes[21]
-                self.level_firemaking = attributes[22]
-                self.level_woodcutting = attributes[23]
-                self.level_farming = attributes[24]
+                self.level_attack = [attributes[3], attributes[3]]
+                self.level_strength = [attributes[4], attributes[4]]
+                self.level_defense = [attributes[5], attributes[5]]
+                self.level_ranged = [attributes[6], attributes[6]]
+                self.level_prayer = [attributes[7], attributes[7]]
+                self.level_magic = [attributes[8], attributes[8]]
+                self.level_runecrafting = [attributes[9], attributes[9]]
+                self.level_construction = [attributes[10], attributes[10]]
+                self.level_agility = [attributes[11], attributes[11]]
+                self.level_herblore = [attributes[12], attributes[12]]
+                self.level_theiving = [attributes[13], attributes[13]]
+                self.level_crafting = [attributes[14], attributes[14]]
+                self.level_fletching = [attributes[15], attributes[15]]
+                self.level_slayer = [attributes[16], attributes[16]]
+                self.level_hunter = [attributes[17], attributes[17]]
+                self.level_mining = [attributes[18], attributes[18]]
+                self.level_smithing = [attributes[19], attributes[19]]
+                self.level_fishing = [attributes[20], attributes[20]]
+                self.level_cooking = [attributes[21], attributes[21]]
+                self.level_firemaking = [attributes[22], attributes[22]]
+                self.level_woodcutting = [attributes[23], attributes[23]]
+                self.level_farming = [attributes[24], attributes[24]]
                 self.combatLevel()
 
-            attributes = attributes[2:]
-            self.level_total = 0
-            for attribute in attributes:
-                self.level_total = self.level_total + attribute
+                attributes = attributes[2:]
+                self.level_total = 0
+                for attribute in attributes:
+                    self.level_total = self.level_total + attribute
             
     def combatLevel(self):
-        base = 0.25*(self.defense + self.hitpoints + math.floor(self.prayer/2))
-        melee = 0.325*(self.attack + self.strength)
-        range = 0.325*(math.floor(self.ranged/2) + self.ranged)
-        mage = 0.325*(math.floor(self.magic/2) + self.magic)
+        base = 0.25*(self.level_defense[1] + self.level_hitpoints[1] + math.floor(self.level_prayer[1]/2))
+        melee = 0.325*(self.level_attack[1] + self.level_strength[1])
+        range = 0.325*(math.floor(self.level_ranged[1]/2) + self.level_ranged[1])
+        mage = 0.325*(math.floor(self.level_magic[1]/2) + self.level_magic[1])
 
         self.combat = math.floor(base + max(melee,range,mage))
     

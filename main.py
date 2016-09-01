@@ -17,8 +17,7 @@ def setup():
     login.createList()
     PC.id, PC.name = login.login()
 
-    if PC.id == 1:
-        PC.loadStats()
+    PC.loadStats()
     
 
 def prompt():

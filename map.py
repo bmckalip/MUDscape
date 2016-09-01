@@ -2,7 +2,7 @@
 import config
 
 def loadMap():
-    f = open('/home/triple111/code/py/RSMud/mapgrid','r') #load user list
+    f = open('mapgrid','r') #load user list
     linelist = []
     
     for line in f:

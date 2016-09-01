@@ -6,6 +6,6 @@ userid (should be the next one so the statlist can be read)
 
 STATLIST FORMAT:
 
-userID, HP, Current HP, attack, strength, defense, ranged, prayer, magic, rc, construction, agility, herb, theiving, crafting, fletching, slayer, hunting, mining, smithing, fishing, cooking, firemaking, woodcutting,
+userID, Current HP, HP, attack, strength, defense, ranged, prayer, magic, rc, construction, agility, herb, theiving, crafting, fletching, slayer, hunting, mining, smithing, fishing, cooking, firemaking, woodcutting,
 
 Rooms are currently in a 100x100 grid, sequentially left to right. To move up, the roomid is -10. To move west, room id is +1 (and vice versa)

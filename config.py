@@ -1,0 +1,7 @@
+userlist = []
+username = []
+mapgrid = []
+
+
+
+

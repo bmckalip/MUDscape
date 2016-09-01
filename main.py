@@ -1,32 +1,34 @@
-import player
+from player import Player
 import login
 import config
 import sys
 import mapper
 import math
 from commands import commands # The dictionary of all commands
-from colorama import init, Fore, Back, Style #For future 
+#from colorama import init, Fore, Back, Style #For future
 #init()
 
 
-PC = player.player()
+PC = Player()
 
 def setup():
     print(chr(27) + "[2J")
     mapper.loadMap()
     login.createList()
-    PC.id,PC.name = login.login()
+    PC.id, PC.name = login.login()
 
     if PC.id == 1:
         PC.loadStats()
     
 
 def prompt():
-    userinput = input(str(PC.hitpoints) +'/'+ str(PC.currentHitpoints) + ' >').lower()
+    userinput = input(str(PC.level_hitpoints[1]) + '/' + str(PC.level_hitpoints[0]) + ' >').lower()
     parseInput(userinput)
+
 
 def main():
     prompt()
+
 
 def parseInput(input):
     args = input.split(' ')

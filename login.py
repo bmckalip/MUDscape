@@ -1,7 +1,7 @@
 import config, player
 
 def createList():
-    f = open('/home/triple111/code/py/RSMud/userlist','r') #load user list
+    f = open('userlist','r') #load user list
     linelist = []
     for line in f:
         linelist.append(line[:-1])

@@ -12,6 +12,7 @@ class Character(ABC):
 
         self.alive = True
         self.invulnerable = False
+        self.inCombat = False
 
 #   calculate the characters combat level
   #  @abstractmethod
@@ -37,18 +38,25 @@ class Character(ABC):
             self.alive = False
             print(self.name + ' has been defeated!')
 
+    def takeDamage(self, damage):
+        if self.invulnerable is True:
+            return
+        self.level_hitpoints[0] -= damage
+        if self.level_hitpoints[0] <=0:
+            self.alive=False
+
     def hpBar(self):
         healthPercent = self.level_hitpoints[0]/self.level_hitpoints[1]
-        if healthPercent >= 1:
+        if healthPercent >= .8:
             hpbar = '█████'
-        elif healthPercent >= .8:
-            hpbar = '████░'
         elif healthPercent >= .6:
-            hpbar = '███░░'
+            hpbar = '████░'
         elif healthPercent >= .4:
-            hpbar = '██░░░'
+            hpbar = '███░░'
         elif healthPercent >= .2:
+            hpbar = '██░░░'
+        elif healthPercent > 0:
             hpbar = '█░░░░'
-        elif healthPercent < .2:
+        elif healthPercent <= 0:
             hpbar = '░░░░░'
         return hpbar

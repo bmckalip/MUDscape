@@ -1,4 +1,5 @@
 import mapper
+import combat
 from abc import ABC, abstractmethod
 
 
@@ -13,7 +14,9 @@ class Kill(Command):
 
     @staticmethod
     def perform(player, *args):
-        print('You attack')
+        
+        combat.Combat.fight(player)
+        player.inCombat = True
         
 
 class Stats(Command):

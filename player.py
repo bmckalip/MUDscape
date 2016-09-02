@@ -35,6 +35,7 @@ class Player(Character):
         self.level_total = 32
         self.combat = 3
         self.run = 100
+        self.flee = False
 
     def gainLevel(self, skill):
         skill += 1

@@ -86,11 +86,8 @@ class Player(Character):
         self.combat = math.floor(base + max(melee,range,mage))
     
     def showStats(self):
-        print( "")
-        print( "*** STATISTICS ***")
-        print( "")
-        print( "{} (level {})".format(self.name,self.combat))
-        print( "")
+        print( "\n*** STATISTICS ***\n")
+        print( "{} (level {})\n".format(self.name,self.combat))
         print( "ATT:{}/{}  HIT:{}/{}  MIN:{}/{}".format(self.level_attack[0], self.level_attack[1], self.level_hitpoints[0], self.level_hitpoints[1], self.level_mining[0], self.level_mining[1]))
         print( "STR:{}/{}  AGL:{}/{}  SMT:{}/{}".format(self.level_strength[0], self.level_strength[1], self.level_agility[0], self.level_agility[1], self.level_smithing[0], self.level_smithing[1]))
         print( "DEF:{}/{}  HRB:{}/{}  FSH:{}/{}".format(self.level_defense[0], self.level_defense[1], self.level_herblore[0], self.level_herblore[1], self.level_fishing[0], self.level_fishing[1]))

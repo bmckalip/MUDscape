@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+from math import floor
 
 class Character(ABC):
 
@@ -14,11 +14,11 @@ class Character(ABC):
         self.invulnerable = False
 
 #   calculate the characters combat level
-    @abstractmethod
+  #  @abstractmethod
     def combatLevel(self):
         pass
 
-    @abstractmethod
+ #  @abstractmethod
     def loadStats(self):
         pass
 
@@ -36,3 +36,19 @@ class Character(ABC):
         if self.__isLethal(damage):
             self.alive = False
             print(self.name + ' has been defeated!')
+
+    def hpBar(self):
+        healthPercent = self.level_hitpoints[0]/self.level_hitpoints[1]
+        if healthPercent >= 1:
+            hpbar = '█████'
+        elif healthPercent >= .8:
+            hpbar = '████░'
+        elif healthPercent >= .6:
+            hpbar = '███░░'
+        elif healthPercent >= .4:
+            hpbar = '██░░░'
+        elif healthPercent >= .2:
+            hpbar = '█░░░░'
+        elif healthPercent < .2:
+            hpbar = '░░░░░'
+        return hpbar

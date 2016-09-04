@@ -21,30 +21,31 @@ def setup():
     login.createList()
     PC.id, PC.name = login.login()
 
-    PC.loadStats()  
+    PC.loadStats()
+    PC.loadInventory()
 
 def prompt():
     if PC.inCombat == False: #noncombat prompt hp/hp >
         userinput = input("{}/{} >".format(PC.level_hitpoints[0],PC.level_hitpoints[1])).lower()
     else:
         userinput = input("{}/{} Target: >".format(PC.level_hitpoints[0],PC.level_hitpoints[1])).lower()
-        
+
     parseInput(userinput)
 
 
 def parseInput(input):
-   
+
     args = input.split(' ')
 
     if args[0] == 'kill':
         Combat.fight(PC,goblin)
 
-    else: 
+    else:
         try:
             commands[args[0]].perform(PC, *args)
         except KeyError:
             print('Invalid command: {}'.format(args[0]))
-    
+
 
 def main():
     prompt()
@@ -57,4 +58,3 @@ setup()
 
 while True:
     main()
-

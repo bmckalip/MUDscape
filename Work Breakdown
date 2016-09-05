@@ -2,9 +2,9 @@ In this file please list what you are working on and any dependencies so we avoi
 
 triple111: Combat
 bmckalip: room system
+hegarz: Inventory
 
 TODO (Free to work on)
--Inventory 
 -Drop Tables
 -Experience Tables
 -Skill system

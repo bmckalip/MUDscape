@@ -1,6 +1,7 @@
 import math
 from character import Character
-
+from item import Item
+from inventory import Inventory
 
 class Player(Character):
 
@@ -35,6 +36,9 @@ class Player(Character):
         self.level_total = 32
         self.combat = 3
         self.run = 100
+        self.flee = False
+
+        self.inventory = Inventory()
 
     def gainLevel(self, skill):
         skill += 1
@@ -42,7 +46,7 @@ class Player(Character):
 
     def loadStats(self):
         f = open('stats_player', 'r')
-        
+
         for line in f:
             #parse input line as a list of ints
             attributes = list(map(int, line.split(',')))
@@ -76,7 +80,32 @@ class Player(Character):
                 self.level_total = 0
                 for attribute in attributes:
                     self.level_total = self.level_total + attribute
-            
+
+    #This is ugly and will need to be changed (obviously) / Just for testing
+    def loadInventory(self):
+        item1 = Item("Fire rune", 80, True)
+        item2 = Item("Water rune", 120, True)
+        item3 = Item("Bronze dagger", 1)
+        item4 = Item("Iron dagger", 1)
+        item5 = Item("Steel dagger", 1)
+        item6 = Item("Black dagger", 1)
+        item7 = Item("Coins", 1000)
+        item8 = Item("Rune scimitar", 1)
+        item9 = Item("Steel arrows", 250, True)
+        item10 = Item("Lobster", 4)
+
+        self.inventory.addItem(item1)
+        self.inventory.addItem(item2)
+        self.inventory.addItem(item3)
+        self.inventory.addItem(item4)
+        self.inventory.addItem(item5)
+        self.inventory.addItem(item6)
+        self.inventory.addItem(item7)
+        self.inventory.addItem(item8)
+        self.inventory.addItem(item9)
+        self.inventory.addItem(item10)
+
+
     def combatLevel(self):
         base = 0.25*(self.level_defense[1] + self.level_hitpoints[1] + math.floor(self.level_prayer[1]/2))
         melee = 0.325*(self.level_attack[1] + self.level_strength[1])
@@ -84,7 +113,7 @@ class Player(Character):
         mage = 0.325*(math.floor(self.level_magic[1]/2) + self.level_magic[1])
 
         self.combat = math.floor(base + max(melee,range,mage))
-    
+
     def showStats(self):
         print( "\n*** STATISTICS ***\n")
         print( "{} (level {})\n".format(self.name,self.combat))
@@ -97,6 +126,11 @@ class Player(Character):
         print( "RNC:{}/{}  SLY:{}/{}  FRM:{}/{}".format(self.level_runecrafting[0], self.level_runecrafting[1], self.level_slayer[0], self.level_slayer[1], self.level_farming[0], self.level_farming[1]))
         print( "CON:{}/{}  HNT:{}/{}  TOT:{}".format(self.level_construction[0], self.level_construction[1], self.level_hunter[0], self.level_hunter[1], self.level_total))
         print( "")
+
+    #This may be unnecessary abstraction, as we can call showInventory from the commands file directly
+    def showInventory(self):
+        self.inventory.showInventory()
+
 
     def move(self, direction):
         if direction == 'n':

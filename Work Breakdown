@@ -1,0 +1,12 @@
+In this file please list what you are working on and any dependencies so we avoid conflicts:
+
+triple111: Combat
+bmckalip: room system
+hegarz: Inventory
+
+TODO (Free to work on)
+-Drop Tables
+-Experience Tables
+-Skill system
+-Shop system
+-Multiplayer framework

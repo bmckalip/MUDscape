@@ -1,4 +1,5 @@
 import mapper
+import combat
 from abc import ABC, abstractmethod
 
 
@@ -13,8 +14,10 @@ class Kill(Command):
 
     @staticmethod
     def perform(player, *args):
-        print('You attack')
-        
+
+        combat.Combat.fight(player)
+        player.inCombat = True
+
 
 class Stats(Command):
     tokens = ['score','stats']
@@ -31,6 +34,12 @@ class Look(Command):
     def perform(player, *args):
         mapper.render(player.location)
 
+class Inventory(Command):
+    tokens = ['inv', 'inventory', 'i']
+
+    @staticmethod
+    def perform(player, *args):
+        player.showInventory()
 
 class Move(Command):
     tokens = ['n', 'north', 's', 'south', 'e', 'east', 'w', 'west']

@@ -9,7 +9,7 @@ class NPC(Character):
         self.name = ""
         self.aggressive = False
 
-        self.level_hitpoints = [1, 1]
+        self.level_hitpoints = [5, 5]
         self.level_attack = [0, 0]
         self.level_strength = [0, 0]
         self.level_defense = [0, 0]
@@ -17,7 +17,7 @@ class NPC(Character):
         self.level_magic = [0, 0]
         self.level_prayer = [0, 0]
 
-        self.loadStats()
+        #self.loadStats()
         self.combatLevel()
 
     def loadStats(self):

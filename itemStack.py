@@ -2,6 +2,7 @@ class ItemStack:
     def __init__(self, itemID, quantity=1):
         self.itemID = itemID
         self.quantity = quantity
+        self.isObtainable = True
 
     def combine(self, other):
         if type(other) is ItemStack:

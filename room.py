@@ -14,8 +14,9 @@ class Room:
         self.id = roomID
         self.enterable = False
 
-        #creates a 5x5 grid of tiles that can be indexed as layout[0][0] (for the first tile, and etc)
-        self.tiles = [[Tile() for x in range(5)] for y in range(5)]
+        #creates a grid of tiles that can be indexed as tiles[0][0] (for the first tile, and etc)
+        self.roomSize = 100
+        self.tiles = [[Tile() for x in range(self.roomSize)] for y in range(self.roomSize)]
         self.drops = []
         self.players = []
         self.NPCs = []
@@ -26,12 +27,12 @@ class Room:
 
     def addDrop(self, items, tile):
         if type(items) is ItemStack:
-            if type(tile) is Tile and tile in self.tiles:
+            if type(tile) is Tile:
                 tile.addDrop(items) #add drop to tile
                 self.__aggregateDrops() #update room drops
 
     def addOccupant(self, character, tile):
-        if type(tile) is Tile and tile in self.tiles:
+        if type(tile) is Tile:
             tile.addOccupant(character)
             self.__aggregateOccupants()
 
@@ -48,38 +49,33 @@ class Room:
             print('Room does not exist')
 
     def __aggregateTileInfo(self):
-        self.__aggregateDrops()
-        self.__aggregateOccupants()
-        self.__setEnterable()
-
-    def __aggregateDrops(self):
         if self.tiles:
-            for tile in self.tiles:
-                for drop in tile.drops:
-                    self.drops.append(drop)
+            for i in range(self.roomSize):
+                for j in range(self.roomSize):
+                    tile = self.tiles[i][j]
+                    self.__aggregateDrops(tile)
+                    self.__aggregateNPCs(tile)
+                    self.__aggregatePlayers(tile)
+                    self.__setEnterable(tile)
 
-    def __aggregateOccupants(self):
-        self.__aggregateNPCs()
-        self.__aggregatePlayers()
+    def __aggregateDrops(self, tile):
+        for drop in tile.drops:
+            if drop not in self.drops:
+                self.drops.append(drop)
 
-    def __aggregatePlayers(self):
-        if self.tiles:
-            for tile in self.tiles:
-                for member in tile.players:
-                    self.players.append(member)
+    def __aggregatePlayers(self, tile):
+        for member in tile.players:
+            if member not in self.players:
+                self.players.append(member)
 
-    def __aggregateNPCs(self):
-        if self.tiles:
-            for tile in self.tiles:
-                for member in tile.NPCs:
-                    self.NPCs.append(member)
+    def __aggregateNPCs(self, tile):
+        for member in tile.NPCs:
+            if member not in self.NPCs:
+                self.NPCs.append(member)
 
-    def __setEnterable(self):
-        if self.tiles:
-            for tile in self.tiles:
-                #if any of room's tiles are enterable, the room is enterable.
-                if tile.isEntrance:
-                    self.enterable = True
-                    break
+    def __setEnterable(self, tile):
+        #if any of room's tiles are enterable, the room is enterable.
+        if tile.isEntrance:
+            self.enterable = True
         #otherwise, room not enterable
         self.enterable = False

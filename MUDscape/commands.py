@@ -45,6 +45,9 @@ class Login(Command):
 
     @staticmethod
     def perform(session, user, password):
+        if session.authenticated:
+            return "{YELLOW}You're already logged in!"
+
         try:
             account = session.conn.query(User).filter(User.name == user and User.password == password).one()
             session.user = account

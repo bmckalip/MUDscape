@@ -20,7 +20,8 @@ class Look(Command):
 
     @staticmethod
     def perform(session):
-        current_map = """\
+        # TODO: Decide on map storage method
+        return """\
 ╔═══════════════╗
 ║               ║
 ║               ║
@@ -28,7 +29,6 @@ class Look(Command):
 ║               ║
 ║               ║
 ╚═══════════════╝"""
-        session.send(current_map)
 
 
 class Quit(Command):

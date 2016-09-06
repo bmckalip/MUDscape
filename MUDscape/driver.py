@@ -26,7 +26,7 @@ class MUDHandler(BaseRequestHandler):
 
     def loop(self):
         while True:
-            data = self.request.recv(1024).strip().decode('ascii')
+            data = self.request.recv(1024).strip().decode('utf-8')
 
             try:
                 command, *args = data.lower().split()
@@ -60,7 +60,7 @@ class MUDHandler(BaseRequestHandler):
 
         while len(data) == 0:
             self.send(message)
-            data = self.request.recv(1024).strip().decode('ascii').lower()
+            data = self.request.recv(1024).strip().decode('utf-8').lower()
 
         return data
 
@@ -68,8 +68,10 @@ class MUDHandler(BaseRequestHandler):
         if prompt:
             # Add prompt if specified
             message = '{}\n{}'.format(message, self.prompt)
+        else:
+            message = '{}\n'.format(message)
 
-        self.request.sendall(message.format(**Fore.__dict__).encode('ascii'))
+        self.request.sendall(message.format(**Fore.__dict__).encode('utf-8'))
 
 
 def start_db():

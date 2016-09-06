@@ -1,7 +1,9 @@
 In this file please list what you are working on and any dependencies so we avoid conflicts:
 
 triple111: Combat
-bmckalip: room system
+bmckalip: room/tile/map system
+    BLOCKED on database implementation, required for tile/room/item storage
+    TODO merge item and itemstack classes which have duplicated functionality
 hegarz: Inventory
 
 TODO (Free to work on)

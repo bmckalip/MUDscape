@@ -25,7 +25,7 @@ class Tile:
         self.drops.append(item)
 
     def removeDrop(self, item):
-        if type(item) is ItemStack and item in self.drops:
+        if type(item) is ItemStack:
             self.drops.remove(item)
 
     def addOccupant(self, character):

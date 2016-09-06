@@ -1,7 +1,0 @@
-userlist = []
-username = []
-mapgrid = []
-
-
-
-

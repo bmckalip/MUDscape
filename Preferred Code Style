@@ -1,0 +1,8 @@
+The following code conventions are the preferred stylings for the MUDscape project:
+
+In general, MUDScape will follow PEP8 guidelines to ensure consistently styled code and readability.
+Any deviations from PEP8 are listed below:
+
+1. functions are to be written in camelCase(), as opposed to PEP8's lower_case() style
+2. line lengths are to be capped at a maximum of 120 characters
+3. . . .

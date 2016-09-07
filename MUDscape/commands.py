@@ -70,7 +70,7 @@ class Login(Command):
                     password_confirmation = session.require_input('{YELLOW}Please re-enter your password')
 
                     if password == password_confirmation:
-                        break;
+                        break
                     else:
                         session.send("{YELLOW}Passwords don't match, please try again", prompt=False)
 

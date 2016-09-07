@@ -44,25 +44,45 @@ class Login(Command):
     tokens = ['login']
 
     @staticmethod
-    def perform(session, user, password):
+    def perform(session):
+
         if session.authenticated:
             return "{YELLOW}You're already logged in!"
 
-        try:
-            account = session.conn.query(User).filter(User.name == user and User.password == password).one()
-            session.user = account
-        except sqlalchemy.orm.exc.NoResultFound:
-            if session.require_input('{YELLOW}Account not found. Create one? [y/n]')[0] == 'y':
-                username = session.require_input('{YELLOW}Please enter a username')
-                password = session.require_input('{YELLOW}Please enter a password')
+        user = session.require_input('{YELLOW}Please enter a username')
 
-                new_user = User(name=username, password=password)
+        try:
+            account = session.conn.query(User).filter(User.name == user).one()
+            password = session.require_input('{YELLOW}Please enter a password')
+
+            if password == account.password:
+                session.user = account
+            else:
+                session.send("{RED}Login Failed! - (Password incorrect)")
+                return
+
+        except sqlalchemy.orm.exc.NoResultFound:
+
+            if session.require_input('{YELLOW}Account not found. Create one? [y/n]')[0] == 'y':
+                #Currently loops untill passwords match
+                while True:
+                    password = session.require_input('{YELLOW}Please enter a password')
+                    password_confirmation = session.require_input('{YELLOW}Please re-enter your password')
+
+                    if password == password_confirmation:
+                        break;
+                    else:
+                        session.send("{YELLOW}Passwords don't match, please try again", prompt=False)
+
+
+                new_user = User(name=user, password=password)
                 session.conn.add(new_user)
                 session.conn.commit()
                 session.user = new_user
             else:
                 session.send('{YELLOW}Alright, disconnecting you{RESET}', prompt=False)
                 raise LogoutException  # Quit
+
 
         session.authenticated = True
         session.prompt = "{GREEN}" + session.user.name + "> {RESET}"

@@ -68,7 +68,6 @@ class MUDHandler(BaseRequestHandler):
             if message:
                 self.send(message)
             data = self.bufferInput().strip().decode('utf-8').lower()
-            #if the input starts with an IAC command, ignore it
 
         #log input attempt in server console
         print(self.client_address[0], "input: ", data)

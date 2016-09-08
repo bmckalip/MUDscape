@@ -26,10 +26,10 @@ class MUDHandler(BaseRequestHandler):
 
     def loop(self):
         while True:
-            data = self.request.recv(1024).strip().decode('utf-8')
+            data = self.require_input()
 
             try:
-                command, *args = data.lower().split()
+                command, *args = data.split()
 
                 # Command handling
                 try:
@@ -37,6 +37,11 @@ class MUDHandler(BaseRequestHandler):
                         if command == 'login':
                             commands['login'].perform(self, *args)
                             continue
+
+                        elif command == 'quit':
+                            commands['quit'].perform(self, *args)
+                            continue
+
                         else:
                             self.send('{YELLOW}You must log in first. Type "login"')
                             continue
@@ -54,14 +59,18 @@ class MUDHandler(BaseRequestHandler):
             except ValueError:  # Client sends empty command
                 self.send()
 
-    def require_input(self, message):
+    def require_input(self, message=None):
         """Repeatedly prompt user for input until something is provided"""
-        data = ''
+        data = bytes()
 
         while len(data) == 0:
-            self.send(message)
-            data = self.request.recv(1024).strip().decode('utf-8').lower()
+            if message:
+                self.send(message)
 
+            data = self.bufferInput().strip().decode('utf-8').lower()
+
+        #log input attempt in server console
+        print(self.client_address[0], "input: ", data)
         return data
 
     def send(self, message='', prompt=True):
@@ -73,6 +82,22 @@ class MUDHandler(BaseRequestHandler):
 
         self.request.sendall(message.format(**Fore.__dict__).encode('utf-8'))
 
+    def bufferInput(self):
+        data = bytes()
+        newLine = "b\'\\r\\n\'"
+        backspace = "b\'\\x08\'"
+        delete = "b\'\\x7f\'"
+        #print(newLine, backspace, delete)
+
+        while True:
+            nextChar = self.request.recv(1024)
+            if str(nextChar) == newLine:
+                break
+            elif str(nextChar) == (backspace or delete):
+                #TODO add special character logic
+                continue
+            data = data + nextChar
+        return data
 
 def start_db():
     engine = create_engine('sqlite:///mudscape.sqlite')

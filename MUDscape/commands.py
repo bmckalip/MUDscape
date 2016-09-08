@@ -80,6 +80,7 @@ class Login(Command):
                 session.conn.commit()
                 session.user = new_user
             else:
+                #TODO change this to prompt for next login attempt, instead of quitting. makes more sense
                 session.send('{YELLOW}Alright, disconnecting you{RESET}', prompt=False)
                 raise LogoutException  # Quit
 

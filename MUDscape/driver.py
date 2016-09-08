@@ -1,6 +1,6 @@
 from socketserver import TCPServer, BaseRequestHandler
 import signal
-import sys
+import sys, os
 from colorama import init, Fore, Back, Style
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -25,7 +25,11 @@ class MUDHandler(BaseRequestHandler):
         self.loop()
 
     def loop(self):
+        #KNOWN BUG: if not connecting from something like putty, relevant information is stored in junk
+        #TODO need to distinguish between systems and determine whether to throw away input or not.
+        junk = self.request.recv(1024)
         while True:
+
             data = self.require_input()
 
             try:
@@ -66,7 +70,6 @@ class MUDHandler(BaseRequestHandler):
         while len(data) == 0:
             if message:
                 self.send(message)
-
             data = self.bufferInput().strip().decode('utf-8').lower()
 
         #log input attempt in server console
@@ -84,19 +87,24 @@ class MUDHandler(BaseRequestHandler):
 
     def bufferInput(self):
         data = bytes()
-        newLine = "b\'\\r\\n\'"
+        nextChar = bytes()
+        newLine = os.linesep.encode('utf-8')
         backspace = "b\'\\x08\'"
         delete = "b\'\\x7f\'"
-        #print(newLine, backspace, delete)
+        emptyString = "b\'\'"
 
         while True:
             nextChar = self.request.recv(1024)
-            if str(nextChar) == newLine:
+            if str(newLine) in str(nextChar):
+                #this handles the situation where the client is in line mode
+                if str(data) == newLine:
+                    data = nextChar
                 break
-            elif str(nextChar) == (backspace or delete):
+            elif (backspace or delete) in str(nextChar):
                 #TODO add special character logic
                 continue
             data = data + nextChar
+
         return data
 
 def start_db():

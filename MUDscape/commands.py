@@ -16,19 +16,19 @@ class Command():
 
 
 class Look(Command):
-    tokens = ['l', 'map', 'm']
+    tokens = ['look', 'l', 'map', 'm']
 
     @staticmethod
     def perform(session):
         # TODO: Decide on map storage method
-        return """\
+        return ("""\
 ╔═══════════════╗
 ║               ║
 ║               ║
 ║       X       ║
 ║               ║
 ║               ║
-╚═══════════════╝"""
+╚═══════════════╝""").encode('utf-8')
 
 
 class Quit(Command):

@@ -26,9 +26,6 @@ class MUDHandler(BaseRequestHandler):
         self.loop()
 
     def loop(self):
-        #KNOWN BUG: if not connecting from something like putty, relevant information is stored in junk
-        #TODO need to distinguish between systems and determine whether to throw away input or not.
-
         while True:
             data = self.require_input()
 

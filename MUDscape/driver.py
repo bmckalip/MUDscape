@@ -1,6 +1,6 @@
 from socketserver import TCPServer, BaseRequestHandler
 import signal
-import sys, os
+import sys
 from colorama import init, Fore, Back, Style
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -9,6 +9,7 @@ from .commands import commands
 from .models import *
 from .exceptions import LogoutException
 from .screens import welcome_message
+from .constants import *
 
 
 class MUDHandler(BaseRequestHandler):
@@ -27,9 +28,8 @@ class MUDHandler(BaseRequestHandler):
     def loop(self):
         #KNOWN BUG: if not connecting from something like putty, relevant information is stored in junk
         #TODO need to distinguish between systems and determine whether to throw away input or not.
-        junk = self.request.recv(1024)
-        while True:
 
+        while True:
             data = self.require_input()
 
             try:
@@ -71,6 +71,7 @@ class MUDHandler(BaseRequestHandler):
             if message:
                 self.send(message)
             data = self.bufferInput().strip().decode('utf-8').lower()
+            #if the input starts with an IAC command, ignore it
 
         #log input attempt in server console
         print(self.client_address[0], "input: ", data)
@@ -88,20 +89,21 @@ class MUDHandler(BaseRequestHandler):
     def bufferInput(self):
         data = bytes()
         nextChar = bytes()
-        newLine = os.linesep.encode('utf-8')
-        backspace = "b\'\\x08\'"
-        delete = "b\'\\x7f\'"
-        emptyString = "b\'\'"
 
         while True:
             nextChar = self.request.recv(1024)
-            if str(newLine) in str(nextChar):
+
+            if nextChar[0] == IAC['IAC']:
+                #ignore IAC command
+                continue
+            elif ASCII['NEW_LINE'] in nextChar:
                 #this handles the situation where the client is in line mode
-                if str(data) == newLine:
+                if data == ASCII['NEW_LINE']:
                     data = nextChar
                 break
-            elif (backspace or delete) in str(nextChar):
+            elif ASCII['BACKSPACE'] in nextChar or ASCII['DELETE'] in nextChar:
                 #TODO add special character logic
+                print('test')
                 continue
             data = data + nextChar
 

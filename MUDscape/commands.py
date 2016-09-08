@@ -28,7 +28,7 @@ class Look(Command):
 ║       X       ║
 ║               ║
 ║               ║
-╚═══════════════╝""").encode('utf-8')
+╚═══════════════╝""")
 
 
 class Quit(Command):

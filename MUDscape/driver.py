@@ -8,11 +8,13 @@ from sqlalchemy.orm import sessionmaker
 from .commands import commands
 from .models import *
 from .exceptions import LogoutException
-from .screens import welcome_message
+from .screens import *
 from .constants import *
 
 
 class MUDHandler(BaseRequestHandler):
+    #track number of connections statically:
+    connectionCount = 0
 
     def handle(self):
         print(self.client_address[0], 'connected')
@@ -22,8 +24,9 @@ class MUDHandler(BaseRequestHandler):
         self.authenticated = False
         self.prompt = "{RED}> {RESET}"
 
+        MUDHandler.connectionCount += 1
         # Start user input
-        self.send(welcome_message)
+        self.send(welcomeMessage(MUDHandler.connectionCount))
         self.loop()
 
     def loop(self):
@@ -57,6 +60,7 @@ class MUDHandler(BaseRequestHandler):
                     message = commands[command].help()
                     self.send(message)
                 except LogoutException:  # User to be disconnected
+                    MUDHandler.connectionCount -= 1
                     if self.authenticated:
                         print(self.client_address[0], '[' + self.user.name + ']', 'disconnected')
                     else:

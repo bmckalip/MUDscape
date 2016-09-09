@@ -13,8 +13,9 @@ from .constants import *
 
 
 class MUDHandler(BaseRequestHandler):
+
     def handle(self):
-        print("{} connected".format(self.client_address[0]))
+        print(self.client_address[0], 'connected')
 
         # Connect to the database
         self.conn = sessionmaker(bind=Base.metadata.bind)()
@@ -37,6 +38,7 @@ class MUDHandler(BaseRequestHandler):
                     if not self.authenticated:
                         if command == 'login':
                             commands['login'].perform(self, *args)
+                            print(self.client_address[0], 'logged in as', self.user.name)
                             continue
 
                         elif command == 'quit':
@@ -55,12 +57,16 @@ class MUDHandler(BaseRequestHandler):
                     message = commands[command].help()
                     self.send(message)
                 except LogoutException:  # User to be disconnected
+                    if self.authenticated:
+                        print(self.client_address[0], '[' + self.user.name + ']', 'disconnected')
+                    else:
+                        print(self.client_address[0], 'disconnected')
                     break
 
             except ValueError:  # Client sends empty command
                 self.send()
 
-    def require_input(self, message=None):
+    def require_input(self, message=None, echoOutput=False):
         """Repeatedly prompt user for input until something is provided"""
         data = bytes()
 
@@ -69,8 +75,13 @@ class MUDHandler(BaseRequestHandler):
                 self.send(message)
             data = self.bufferInput().strip().decode('utf-8').lower()
 
-        #log input attempt in server console
-        print(self.client_address[0], "input: ", data)
+        logMessage = str(self.client_address[0]) + "input: " + str(data)
+
+        #print input attempt to server console
+        if echoOutput:
+            if data is not None:
+                print(logMessage)
+
         return data
 
     def send(self, message='', prompt=True):
@@ -83,26 +94,32 @@ class MUDHandler(BaseRequestHandler):
         self.request.sendall(message.format(**Fore.__dict__).encode('utf-8'))
 
     def bufferInput(self):
-        data = bytes()
-        nextChar = bytes()
+        data = bytearray()
 
         while True:
-            nextChar = self.request.recv(1024)
+            inputBytes = iter(self.request.recv(1024))
 
-            if nextChar[0] == IAC['IAC']:
-                #ignore IAC command
-                continue
-            elif ASCII['NEW_LINE'] in nextChar:
-                #this handles the situation where the client is in line mode
-                if data == ASCII['NEW_LINE']:
-                    data = nextChar
+            for byte in inputBytes:
+                #check if byte is a telnet command
+                if byte in TELNET.values():
+                    #if next byte is a telnet command that expects an argument, skip the argument
+                    if byte in (TELNET['WILL'], TELNET['WONT'], TELNET['DO'], TELNET['DONT']):
+                        next(inputBytes)
+                    #skip the IAC
+                    continue
+                #if a new line is encountered, terminate parsing and return the completed command
+                elif byte in (ASCII['NEW_LINE'], ASCII['RETURN']):
+                    return data
+
+                #TODO add special character processing (like delete and backspace)
+                elif byte in (ASCII['BACKSPACE'], ASCII['DELETE']):
+                    continue
+
+                data.append(byte)
+
+            #ensure an infinite loop does not occur if input is solely telnet commands
+            if len(data) == 0:
                 break
-            elif ASCII['BACKSPACE'] in nextChar or ASCII['DELETE'] in nextChar:
-                #TODO add special character logic
-                print('test')
-                continue
-            data = data + nextChar
-
         return data
 
 def start_db():
@@ -121,6 +138,7 @@ def main():
     start_db()
 
     print('Starting server at {}:{}'.format(HOST, PORT))
+
     server.serve_forever()
 
 

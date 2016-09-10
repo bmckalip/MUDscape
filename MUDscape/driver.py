@@ -41,7 +41,6 @@ class MUDHandler(BaseRequestHandler):
                     if not self.authenticated:
                         if command == 'login':
                             commands['login'].perform(self, *args)
-                            print(self.client_address[0], 'logged in as', self.user.name)
                             continue
 
                         elif command == 'quit':
@@ -61,10 +60,6 @@ class MUDHandler(BaseRequestHandler):
                     self.send(message)
                 except LogoutException:  # User to be disconnected
                     MUDHandler.connectionCount -= 1
-                    if self.authenticated:
-                        print(self.client_address[0], '[' + self.user.name + ']', 'disconnected')
-                    else:
-                        print(self.client_address[0], 'disconnected')
                     break
 
             except ValueError:  # Client sends empty command
